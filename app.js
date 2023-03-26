@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
+require("dotenv").config();
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,10 +15,10 @@ app.post("/", function (req, res) {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const emailAddress = req.body.emailAddress;
-  const listId = "b16a7c38c1";
+  const listId = process.env.MAILCHIMP_LISTID;
   mailchimp.setConfig({
-    apiKey: "efb85712252d6f583e81ec9c6ebefe37-us18", // {APIKEY-DATACENTER(dc)}
-    server: "us18", // DATACENTER(dc)
+    apiKey: process.env.MAILCHIMP_API_KEY,
+    server: process.env.MAILCHIMP_SERVER,
   });
 
   async function run() {
